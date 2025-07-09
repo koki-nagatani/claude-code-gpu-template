@@ -1,0 +1,20 @@
+services:
+  claude-code-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./work:/home/ubuntu/work
+    working_dir: /home/ubuntu/work
+
+    command: bash
+    shm_size: '2gb'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
